@@ -113,9 +113,15 @@
                 </a>
             </li>
             <li class="menu-item {{ Request::is('pemeriksaan*') ? 'active' : '' }}">
-                <a href="{{ url('pemeriksaan') }}" class="menu-link">
+                <a href="{{ route('pemeriksaan') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-book-add"></i>
                     <div data-i18n="Analytics">Konsultasi</div>
+                </a>
+            </li>
+            <li class="menu-item {{ Request::is('resep*') ? 'active' : '' }}">
+                <a href="{{ route('resep') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-book"></i>
+                    <div data-i18n="Analytics">Resep</div>
                 </a>
             </li>
           </ul>

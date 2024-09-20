@@ -4,7 +4,7 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 ">
         <h1 class="h2">Konsultasi</h1>
         <div class="d-flex justify-content-end">
-            <a href="/tambah_pemeriksaan" class="btn btn-primary"><i style="width:17px" data-feather="plus"></i>
+            <a href="{{ route('tambahPemeriksaan') }}" class="btn btn-primary"><i style="width:17px" data-feather="plus"></i>
                 Buat Konsultasi</a>
         </div>
     </div>

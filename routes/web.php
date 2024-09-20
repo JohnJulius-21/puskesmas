@@ -26,6 +26,7 @@ use App\Http\Controllers\PasienController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\KonsultasiController;
 use App\Http\Controllers\PemeriksaanController;
+use App\Http\Controllers\ResepController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,7 +74,7 @@ Route::resource('/dokter', ControllerDokter::class);
 
 
 Route::get('/pemeriksaan', [PemeriksaanController::class,'index'])->name('pemeriksaan');
-Route::get('/tambah_pemeriksaan', [PemeriksaanController::class,'create'])->name('tambahPemeriksaan');
+Route::get('/pemeriksaan/tambah_pemeriksaan', [PemeriksaanController::class,'create'])->name('tambahPemeriksaan');
 Route::post('/simpan_pemeriksaan', [PemeriksaanController::class,'store'])->name('simpanPemeriksaan');
 Route::get('/get-patient-info/{id}', [PemeriksaanController::class, 'getPatientInfo']);
 
@@ -81,7 +82,7 @@ Route::get('/get-patient-info/{id}', [PemeriksaanController::class, 'getPatientI
 Route::get('/', [HomeController::class, 'index'])->name('beranda');
 Route::get('/home', [HomeController::class, 'redirect'])->name('home');
 Route::get('/konsultasi', [KonsultasiController::class, 'create'])->middleware('auth')->name('konsultasi');
-Route::get('/konsultasiShow', [KonsultasiController::class, 'show'])->middleware('auth')->name('konsultasiShow');
+Route::get('/konsultasi/konsultasiShow', [KonsultasiController::class, 'show'])->middleware('auth')->name('konsultasiShow');
 Route::post('/konsultasiStore', [KonsultasiController::class, 'store'])->middleware('auth')->name('konsultasiStore');
 Route::middleware([
     'auth:sanctum',
@@ -94,3 +95,7 @@ Route::middleware([
 });
 
 Route::get('/add_doctor_view', [AdminController::class, 'addview']);
+
+Route::get('/resep', [ResepController::class,'index'])->name('resep');
+Route::get('/resep/tambahResep', [ResepController::class,'create'])->name('tambahResep');
+Route::post('/resep/simpanResep', [ResepController::class,'store'])->name('simpanResep');

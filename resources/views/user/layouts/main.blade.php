@@ -72,13 +72,16 @@
                 <nav id="navmenu" class="navmenu">
                     <ul>
                         <li><a href="/" class="{{ Request::is('/') ? 'active' : '' }}">Beranda</a></li>
-                        <li><a href="{{ url('konsultasi') }}" class="{{ Request::is('konsultasi') ? 'active' : '' }}">Konsultasi</a></li>
+                        <li><a href="{{ url('konsultasi') }}"
+                                class="{{ Request::is('konsultasi') ? 'active' : '' }}">Konsultasi</a></li>
                         @auth
-                            <li class="dropdown">
-                                <a href="#"><span>Halo, {{ auth()->user()->name }}</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                            <li class="dropdown {{ Request::is('konsultasiShow') ? 'active' : '' }}">
+                                <a href="#"><span>Halo, {{ auth()->user()->name }}</span> <i
+                                        class="bi bi-chevron-down toggle-dropdown {{ Request::is('konsultasiShow') ? 'active' : '' }}"></i></a>
                                 <ul>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="/konsultasiShow">Konsultasi Saya</a>
+                                        <a class="nav-link {{ Request::is('konsultasiShow') ? 'active' : '' }}"
+                                            href="{{ route('konsultasiShow') }}">Konsultasi Saya</a>
                                     </li>
                                     <li>
                                         <form id="logoutForm" action="{{ route('logout') }}" method="post">
@@ -89,13 +92,16 @@
                                 </ul>
                             </li>
                         @else
-                            <a class="cta-btn d-none d-sm-block" style="margin-left:8px" href="{{ route('login') }}">Login</a>
-                            <a class="cta-btn d-none d-sm-block" style="margin-left:8px" href="{{ route('register') }}">Sign Up</a>
+                            <a class="cta-btn d-none d-sm-block" style="margin-left:8px"
+                                href="{{ route('login') }}">Login</a>
+                            <a class="cta-btn d-none d-sm-block" style="margin-left:8px"
+                                href="{{ route('register') }}">Sign Up</a>
                         @endauth
                     </ul>
                     <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
                 </nav>
-                
+
+
             </div>
         </div>
 

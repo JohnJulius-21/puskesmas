@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Dokter;
 use App\Models\jenis_layanan;
+use App\Models\konsultasi;
 use App\Models\pasien;
+use App\Models\resep;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class KonsultasiController extends Controller
 {
@@ -22,12 +25,39 @@ class KonsultasiController extends Controller
         ]);
     }
 
-    public function show(){
-        return view('user.konsultasi.show');
+    public function show()
+    {
+        // Ambil user yang sedang login
+        $user = auth()->user();
+
+        // Ambil pasien berdasarkan patient_id yang sesuai dengan user_id
+        $pasien = pasien::where('user_id', $user->id)->first();
+
+
+        if ($pasien) {
+            // Ambil konsultasi yang sesuai dengan kolom patient_id dari pasien
+            $konsultasi = konsultasi::with('dokter')
+                ->where('patient_id', $pasien->id)
+                ->get();
+
+            // Ambil resep yang sesuai dengan kolom patient_id dari pasien
+            $resep = resep::with('obat')
+                ->where('patient_id', $pasien->id)
+                ->get();
+            // dd($resep);
+        } else {
+            $konsultasi = collect(); // Jika tidak ada pasien, return koleksi kosong
+            $resep = collect(); // Jika tidak ada pasien, return koleksi kosong
+        }
+
+        return view('user.konsultasi.show', compact('konsultasi','resep'));
     }
+
+
 
     public function store(Request $request)
     {
+        // dd($request->all());
         // Validasi data yang diterima dari form
         $validatedData = $request->validate([
             'nama' => 'required|string|max:255',
@@ -73,9 +103,11 @@ class KonsultasiController extends Controller
         $konsultasi->id_dokter = $validatedData['dokter'];
         $konsultasi->keluhan = $validatedData['keluhan'];
         $konsultasi->riwayat = $validatedData['riwayat'];
+        $konsultasi->user_id = Auth::id();
+        // dd($konsultasi);
         $konsultasi->save();
 
         // Berikan response setelah data berhasil disimpan
-        return redirect()->route('konsultasi')->with('success', 'Data konsultasi berhasil disimpan!');
+        return redirect()->route('konsultasiShow')->with('success', 'Data konsultasi berhasil disimpan!, Data konsultasi anda sedang diproses!');
     }
 }
