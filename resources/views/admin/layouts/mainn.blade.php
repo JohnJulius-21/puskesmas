@@ -71,6 +71,7 @@
     <!-- jQuery Modal -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+    {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> --}}
 
   </head>
 
@@ -203,19 +204,20 @@
       <!-- Overlay -->
       <div class="layout-overlay layout-menu-toggle"></div>
 
-      <div id="logout-modal" class="modal" style="margin-top:80px; height:25%; align-item:center">
-        <h4>Konfirmasi Logout</h4>
-        <p>Apakah Anda yakin ingin logout?</p>
-        <div class="text-right">
-        <!-- Form untuk logout -->
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: inline;">
-            @csrf
-            <button type="submit" class="btn btn-danger">Log Out</button>
-        </form>
-        <a href="#" rel="modal:close" class="btn btn-secondary">Batal</a>
-        </div>
     </div>
-    <!-- / Layout wrapper -->
+
+    <div id="logout-modal" class="modal" style="margin-top:80px; height:25%; align-item:center">
+      <h4>Konfirmasi Logout</h4>
+      <p>Apakah Anda yakin ingin logout?</p>
+      <div class="text-right">
+      <!-- Form untuk logout -->
+      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: inline;">
+          @csrf
+          <button type="submit" class="btn btn-danger">Log Out</button>
+      </form>
+      <a href="#" rel="modal:close" class="btn btn-secondary">Batal</a>
+      </div>
+  </div>
 
 
 
@@ -242,5 +244,6 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> --}}
   </body>
 </html>

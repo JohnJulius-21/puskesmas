@@ -57,7 +57,7 @@ class PasienController extends Controller
             'keluhan.required' => 'Keluhan pasien wajib diisi.',
             'riwayat.required' => 'Riwayat penyakit wajib diisi.',
         ]);
-        
+
 
         // Simpan data ke dalam database
         $konsultasi = new pasien();
@@ -78,5 +78,17 @@ class PasienController extends Controller
 
         // Berikan response setelah data berhasil disimpan
         return redirect()->route('pasien')->with('success', 'Data konsultasi berhasil disimpan!');
+    }
+
+    public function destroy($id)
+    {
+        // Temukan data pasien berdasarkan ID
+        $pasien = Pasien::findOrFail($id);
+
+        // Hapus data pasien
+        $pasien->delete();
+
+        // Redirect kembali dengan pesan sukses
+        return redirect()->back()->with('success', 'Data pasien berhasil dihapus.');
     }
 }

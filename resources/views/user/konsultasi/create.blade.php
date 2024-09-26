@@ -23,7 +23,7 @@
                     </div>
             
                     <div class="col-md-12 form-group mt-3">
-                        <label for="nik" class="mb-2">NIK</label>
+                        <label for="nik" class="mb-2">Nomor KTP</label>
                         <input type="text" class="form-control @error('nik') is-invalid @enderror" name="nik" id="nik"
                                placeholder="Masukan NIK Anda" value="{{ old('nik') }}">
                         @error('nik')
@@ -161,7 +161,7 @@
     <script>
         document.getElementById('status').addEventListener('change', function() {
             var bpjsField = document.getElementById('bpjs-field');
-            if (this.value == '2') {
+            if (this.value == 'BPJS') {
                 bpjsField.style.display = 'block';
             } else {
                 bpjsField.style.display = 'none';

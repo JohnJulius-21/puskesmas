@@ -58,13 +58,22 @@ Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->na
 Route::post('/register', [RegisterController::class, 'register'])->name('register');
 
 Route::get('/data_pasien', [PasienController::class, 'index'])->name('pasien');
+Route::post('/hapusPasien/{id}', [PasienController::class, 'destroy'])->name('hapusPasien');
 Route::get('/tambah_pasien', [PasienController::class, 'create'])->name('tambahPasien');
 Route::post('/simpan_pasien', [PasienController::class, 'store'])->name('pasienStore');
 
 
 Route::get('/add_doctor_dokter', [DokterController::class, 'showDoctor'])->name('show.doctor');
 Route::get('/tambah_dokter', [DokterController::class, 'create']);
-Route::get('/data_obat', [ObatController::class, 'showObat']);
+
+Route::get('/data_obat', [ObatController::class, 'showObat'])->name('obat');
+Route::get('/data_obat/tambah_obat', [ObatController::class, 'createObat'])->name('tambahObat');
+Route::post('/simpan_obat', [ObatController::class, 'storeObat'])->name('simpanObat');
+Route::post('/hapus_obat/{id}', [ObatController::class, 'destroy'])->name('hapusObat');
+Route::post('/hapus_obat/{id}', [ObatController::class, 'destroy'])->name('hapusObat');
+Route::put('/updateObat/{id}', [ObatController::class, 'update'])->name('updateObat');
+
+
 Route::get('/homeadmin', [AdminController::class, 'showHome']);
 Route::get('/show_doctor', [DokterController::class, 'showDoctor']);
 Route::post('/add_doctor_dokter', [DokterController::class, 'addDoctor'])->name('add.doctor');
@@ -74,6 +83,7 @@ Route::resource('/dokter', ControllerDokter::class);
 
 
 Route::get('/pemeriksaan', [PemeriksaanController::class,'index'])->name('pemeriksaan');
+Route::post('/hapusPemeriksaan', [PemeriksaanController::class,'destroy'])->name('hapusPemeriksaan');
 Route::get('/pemeriksaan/tambah_pemeriksaan', [PemeriksaanController::class,'create'])->name('tambahPemeriksaan');
 Route::post('/simpan_pemeriksaan', [PemeriksaanController::class,'store'])->name('simpanPemeriksaan');
 Route::get('/get-patient-info/{id}', [PemeriksaanController::class, 'getPatientInfo']);

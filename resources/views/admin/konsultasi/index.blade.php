@@ -33,7 +33,6 @@
                             <td>{{ \Carbon\Carbon::parse($item->tanggal_konsultasi)->locale('id')->isoFormat('D MMMM Y H:mm') }}</td>
                             <td>{{ $item->keluhan }}</td>
                             <td>{{ $item->riwayat }}</td>
-                            
                         </tr>
                     @endforeach
                 </tbody>

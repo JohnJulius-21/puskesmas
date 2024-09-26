@@ -83,4 +83,9 @@ class PemeriksaanController extends Controller
 
         return redirect()->route('pemeriksaan')->with('success', 'Konsultasi berhasil disimpan.');
     }
+
+    public function destroy($id)
+    {
+        
+    }
 }

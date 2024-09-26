@@ -31,6 +31,7 @@
                         <th>Nama Dokter</th>
                         <th>Keluhan</th>
                         <th>Riwayat</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,6 +51,12 @@
                             <td>{{ $item->dokter->name }}</td>
                             <td>{{ $item['keluhan'] }}</td>
                             <td>{{ $item['riwayat'] }}</td>
+                            <td>
+                                <form action="{{ route('hapusPasien', $item['id']) }}" method="POST">
+                                    @csrf
+                                    <button class="btn btn-danger">Hapus</button>
+                                </form>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
