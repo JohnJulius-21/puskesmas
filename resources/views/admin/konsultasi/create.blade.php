@@ -16,7 +16,11 @@
                     <select name="pasien" id="pasien" class="form-select @error('pasien') is-invalid @enderror">
                         <option value="">Pilih Pasien</option>
                         @foreach ($pasien as $item)
-                            <option value="{{ $item['id'] }}" {{ old('nama_pasien') == $item['id'] ? 'selected' : '' }}>
+                            @php
+                                // Check if the patient has any ongoing or waiting consultations
+                                $hasOngoingConsultation = $item->konsultasi->whereIn('status', ['waiting', 'on going'])->isNotEmpty();
+                            @endphp
+                            <option value="{{ $item['id'] }}" data-status="{{ $hasOngoingConsultation ? 'in_process' : 'available' }}">
                                 {{ $item['nama_pasien'] }}
                             </option>
                         @endforeach
@@ -47,8 +51,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="patient-datekonsul">Tanggal Konsultasi:</label>
-                        <input type="datetime-local" class="form-control" id="patient-datekonsul" name="tanggal_konsultasi"
-                            readonly>
+                        <input type="datetime-local" class="form-control" id="patient-datekonsul" name="tanggal_konsultasi" readonly>
                     </div>
                     <div class="mb-3">
                         <label for="patient-keluhan">Keluhan Pasien:</label>
@@ -88,9 +91,15 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $('#pasien').on('change', function() {
-            var patientId = $(this).val();
+            var selectedOption = $(this).find('option:selected');
+            var patientStatus = selectedOption.data('status'); // Get the selected patient's status
 
-            if (patientId) {
+            if (patientStatus === 'in_process') {
+                alert("Pasien sedang dalam proses");
+                $(this).val(''); // Reset selection if needed
+            } else {
+                var patientId = selectedOption.val();
+
                 $.ajax({
                     url: '/get-patient-info/' + patientId,
                     type: 'GET',
@@ -104,21 +113,11 @@
                             $('#patient-gender').val(data.jenis_kelamin);
                             $('#patient-keluhan').val(data.keluhan);
                             $('#patient-riwayat').val(data.riwayat);
-                            // Tambahkan pengisian data field lain jika ada
                         } else {
                             alert("Data pasien tidak ditemukan.");
                         }
                     }
                 });
-            } else {
-                // Kosongkan field jika pasien tidak dipilih
-                $('#patient-name').val('');
-                $('#patient-nik').val('');
-                $('#patient-birthdate').val('');
-                $('#patient-datekonsul').val('');
-                $('#patient-gender').val('');
-                $('#patient-keluhan').val('');
-                $('#patient-riwayat').val('');
             }
         });
     </script>

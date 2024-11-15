@@ -13,7 +13,8 @@ class konsultasi extends Model
         'patients_id',
         'doctors_id',
     ] ;
-
+     // Kolom-kolom yang akan otomatis di-cast sebagai instance Carbon
+     protected $dates = ['tanggal_konsultasi'];
     public function pasien(){
         return $this->belongsTo(pasien::class, 'patient_id', 'id');
     }
@@ -21,4 +22,14 @@ class konsultasi extends Model
     public function dokter(){
         return $this->belongsTo(dokter::class, 'doctor_id', 'id');
     }
+    public function resep()
+    {
+        return $this->hasMany(Resep::class, 'konsultasi_id', 'id'); // Specify the foreign key in the Resep table
+    }
+public function obat()
+{
+    return $this->belongsTo(Obat::class);
+}
+
+
 }

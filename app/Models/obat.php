@@ -9,10 +9,13 @@ class obat extends Model
 {
     use HasFactory;
     protected $table = "obat";
+    protected $primaryKey = "id";
     protected $fillable = 
     [
         "nama_obat",
         "satuan_terkecil",
         "status",
+        
     ];
+    public $timestamps = true;
 }

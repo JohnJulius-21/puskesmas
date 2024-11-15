@@ -19,6 +19,6 @@ class pasien extends Model
     }
 
     public function konsultasi(){
-        return $this->hasMany(konsultasi::class);
+        return $this->hasMany(konsultasi::class,'patient_id');
     }
 }

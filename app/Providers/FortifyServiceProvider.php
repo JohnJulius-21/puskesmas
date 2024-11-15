@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
-
+use Illuminate\Support\Facades\Validator;
 class FortifyServiceProvider extends ServiceProvider
 {
     /**
@@ -37,6 +37,9 @@ class FortifyServiceProvider extends ServiceProvider
             $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())).'|'.$request->ip());
 
             return Limit::perMinute(5)->by($throttleKey);
+        });
+        Validator::extend('password', function ($attribute, $value, $parameters, $validator) {
+            return strlen($value) >= 5; // Set minimum password length to 5
         });
 
         RateLimiter::for('two-factor', function (Request $request) {

@@ -12,6 +12,7 @@ class PasienController extends Controller
     public function index()
     {
         $pasien = pasien::all();
+        
         // dd($pasien);
         return view('admin.pasien.index', compact('pasien'));
     }
@@ -74,6 +75,7 @@ class PasienController extends Controller
         $konsultasi->id_dokter = $validatedData['dokter'];
         $konsultasi->keluhan = $validatedData['keluhan'];
         $konsultasi->riwayat = $validatedData['riwayat'];
+    // dd($konsultasi);
         $konsultasi->save();
 
         // Berikan response setelah data berhasil disimpan

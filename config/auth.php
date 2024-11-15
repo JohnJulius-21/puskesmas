@@ -36,11 +36,16 @@ return [
     */
 
     'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
-        ],
+    'web' => [
+        'driver' => 'session',
+        'provider' => 'users', // For regular users
     ],
+    'admin' => [
+        'driver' => 'session',
+        'provider' => 'admins', // Use the same provider but handle filtering elsewhere
+    ],
+],
+
 
     /*
     |--------------------------------------------------------------------------
@@ -64,12 +69,20 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
+        'admins' => [  // Add this provider for admins
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class, // Use the User model but filter by role
+            'filter' => function($query): mixed {
+                return $query->where('role_id', 'admin_role_id'); // Replace 'admin_role_id' with your admin role ID
+            }, ],
+        ],
+
 
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
-    ],
+    
 
     /*
     |--------------------------------------------------------------------------

@@ -1,6 +1,13 @@
 @extends('admin.layouts.mainn')
 
 @section('container')
+@if (session('success'))
+<div class="alert alert-success mt-3">
+    {{ session('success') }}
+</div>
+@endif
+
+
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 ">
         <h1 class="h2">Daftar Dokter</h1>
         <div class="d-flex justify-content-end">
@@ -39,13 +46,7 @@
                                     <td>{{ $doctor->spesialis }}</td>
                                     <td>{{ $doctor->no_telp }}</td>
                                     <td>{{ $doctor->status }}</td>
-                                    {{-- <td>
-                                @if ($doctor->foto)
-                                <img src="{{ asset('storage/doctor_images/'. basename($doctor->foto)) }}" alt="Doctor Image" width="50" height="50">
-                                @else
-                                No Image
-                                @endif
-                            </td> --}}
+                                
 
                                     <td>
                                         <form action="{{ route('delete-doctor', $doctor->id) }}" method="POST">

@@ -6,6 +6,7 @@ use App\Models\obat;
 use Illuminate\Http\Request;
 
 class ObatController extends Controller
+
 {
     public function showObat()
     {
@@ -20,25 +21,26 @@ class ObatController extends Controller
     }
 
     public function storeObat(Request $request)
-    {
-        // dd($request->all());
-        // Validasi data yang masuk
-        $validatedData = $request->validate([
-            'nama' => 'required|string|max:255',
-            'satuan' => 'required|string|max:100',
-            'stok' => 'required|integer',
-        ]);
+{
+    // Validasi data yang masuk
+    $validatedData = $request->validate([
+        'nama' => 'required|string|max:255',
+        'satuan' => 'required|string|max:100',
+        'stok' => 'required',
+    ]);
 
-        // Simpan data ke dalam database
-        Obat::create([
-            'nama_obat' => $validatedData['nama'],
-            'satuan_terkecil' => $validatedData['satuan'],
-            'status' => $validatedData['stok'],  // Tambahkan jika Anda ingin menyimpan stok
-        ]);
+    // Simpan data ke dalam database
+    $obat = new Obat();
+    $obat->nama_obat = $validatedData['nama'];
+    $obat->satuan_terkecil = $validatedData['satuan'];
+    $obat->status = $validatedData['stok'];  // Make sure 'stok' is the correct column'
+    // dd($obat);
+    $obat->save();  // Automatically adds created_at and updated_at
 
-        // Redirect dengan pesan sukses
-        return redirect()->route('obat')->with('success', 'Data obat berhasil disimpan.');
-    }
+    // Redirect dengan pesan sukses
+    return redirect()->route('obat')->with('success', 'Data obat berhasil disimpan.');
+}
+
 
     public function update(Request $request, $id)
     {

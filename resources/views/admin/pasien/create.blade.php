@@ -9,66 +9,75 @@
             <h6 class="m-0 font-weight-bold text-primary">Pasien</h6>
         </div>
         <div class="card-body">
-            <form action="{{ route('pasienStore') }}" method="post">
+            <form action="{{ route('pasienStore') }}" method="post" id="patientForm">
                 @csrf
-                <div class="row">
-                    <div class="col-md-12">
-                        <label for="nama" class="mb-2">Nama Pasien</label>
-                        <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" id="nama" 
-                               placeholder="Nama Pasien" value="{{ old('nama') }}" autofocus>
-                        @error('nama')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
+                <!-- Step 1 -->
+                <div id="step1">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="nama" class="mb-2">Nama Pasien</label>
+                            <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" id="nama" 
+                                   placeholder="Nama Pasien" value="{{ old('nama') }}" autofocus>
+                            @error('nama')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
             
-                    <div class="col-md-12 form-group mt-3">
-                        <label for="nik" class="mb-2">NIK</label>
-                        <input type="text" class="form-control @error('nik') is-invalid @enderror" name="nik" id="nik"
-                               placeholder="Masukan NIK Anda" value="{{ old('nik') }}">
-                        @error('nik')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
+                        <div class="col-md-12 form-group mt-3">
+                            <label for="nik" class="mb-2">NIK</label>
+                            <input type="text" class="form-control @error('nik') is-invalid @enderror" name="nik" id="nik"
+                                   placeholder="Masukan NIK Anda" value="{{ old('nik') }}">
+                            @error('nik')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
             
-                    <div class="col-md-12 form-group mt-3">
-                        <label for="jenis_kelamin" class="mb-2">Jenis Kelamin</label>
-                        <select name="jenis_kelamin" id="jenis_kelamin" class="form-select @error('jenis_kelamin') is-invalid @enderror">
-                            <option value="">Pilih Jenis Kelamin</option>
-                            <option value="Laki - Laki" {{ old('jenis_kelamin') == 'Laki - Laki' ? 'selected' : '' }}>Laki - Laki</option>
-                            <option value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
-                        </select>
-                        @error('jenis_kelamin')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
+                        <div class="col-md-12 form-group mt-3">
+                            <label for="jenis_kelamin" class="mb-2">Jenis Kelamin</label>
+                            <select name="jenis_kelamin" id="jenis_kelamin" class="form-select @error('jenis_kelamin') is-invalid @enderror">
+                                <option value="">Pilih Jenis Kelamin</option>
+                                <option value="Laki - Laki" {{ old('jenis_kelamin') == 'Laki - Laki' ? 'selected' : '' }}>Laki - Laki</option>
+                                <option value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+                            </select>
+                            @error('jenis_kelamin')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
             
-                    <div class="col-md-12 form-group mt-3">
-                        <label for="tanggal_lahir" class="mb-2">Tanggal Lahir</label>
-                        <input type="date" name="tanggal_lahir" class="form-control @error('tanggal_lahir') is-invalid @enderror" id="tanggal_lahir"
-                               value="{{ old('tanggal_lahir') }}">
-                        @error('tanggal_lahir')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
+                        <div class="col-md-12 form-group mt-3">
+                            <label for="tanggal_lahir" class="mb-2">Tanggal Lahir</label>
+                            <input type="date" name="tanggal_lahir" class="form-control @error('tanggal_lahir') is-invalid @enderror" id="tanggal_lahir"
+                                   value="{{ old('tanggal_lahir') }}">
+                            @error('tanggal_lahir')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
             
-                    <div class="col-md-12 form-group mt-3">
-                        <label for="alamat" class="mb-2">Alamat</label>
-                        <input type="text" class="form-control @error('alamat') is-invalid @enderror" name="alamat" id="alamat"
-                               placeholder="Masukan Alamat Anda" value="{{ old('alamat') }}">
-                        @error('alamat')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
+                        <div class="col-md-12 form-group mt-3">
+                            <label for="alamat" class="mb-2">Alamat</label>
+                            <input type="text" class="form-control @error('alamat') is-invalid @enderror" name="alamat" id="alamat"
+                                   placeholder="Masukan Alamat Anda" value="{{ old('alamat') }}">
+                            @error('alamat')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
             
-                    <div class="col-md-12 form-group mt-3">
-                        <label for="no_hp" class="mb-2">Nomor Telepon</label>
-                        <input type="text" class="form-control @error('no_hp') is-invalid @enderror" name="no_hp" id="no_hp"
-                               placeholder="Masukan Nomor Telepon Anda" value="{{ old('no_hp') }}">
-                        @error('no_hp')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        <div class="col-md-12 form-group mt-3">
+                            <label for="no_hp" class="mb-2">Nomor Telepon</label>
+                            <input type="text" class="form-control @error('no_hp') is-invalid @enderror" name="no_hp" id="no_hp"
+                                   placeholder="Masukan Nomor Telepon Anda" value="{{ old('no_hp') }}">
+                            @error('no_hp')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
                     </div>
-            
+                    <div class="mt-3 text-center">
+                        <button type="button" class="btn btn-primary" onclick="nextStep()">Next</button>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div id="step2" style="display: none;">
                     <div class="col-md-12 form-group mt-3">
                         <label for="status" class="mb-2">Status</label>
                         <select name="status" id="status" class="form-select @error('status') is-invalid @enderror">
@@ -80,7 +89,7 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-            
+
                     <div class="col-md-12 form-group mt-3" id="bpjs-field" style="display: {{ old('status') == 'BPJS' ? 'block' : 'none' }};">
                         <label for="nomor_bpjs" class="mb-2">Nomor BPJS</label>
                         <input type="text" name="nomor_bpjs" id="nomor_bpjs" class="form-control @error('nomor_bpjs') is-invalid @enderror"
@@ -89,7 +98,7 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-            
+
                     <div class="col-md-12 form-group mt-3">
                         <label for="tanggal_konsultasi" class="mb-2">Tanggal Konsultasi</label>
                         <input type="datetime-local" name="tanggal_konsultasi" class="form-control @error('tanggal_konsultasi') is-invalid @enderror"
@@ -98,7 +107,7 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-            
+
                     <div class="col-md-12 form-group mt-3">
                         <label for="jenis_layanan" class="mb-2">Pilih Jenis Layanan</label>
                         <select name="jenis_layanan" id="jenis_layanan" class="form-select @error('jenis_layanan') is-invalid @enderror">
@@ -113,7 +122,7 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-            
+
                     <div class="col-md-12 form-group mt-3">
                         <label for="dokter" class="mb-2">Pilih Dokter</label>
                         <select name="dokter" id="dokter" class="form-select @error('dokter') is-invalid @enderror">
@@ -128,44 +137,75 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                </div>
-            
-                <div class="form-group mt-3">
-                    <label for="keluhan" class="mb-2">Keluhan Pasien</label>
-                    <textarea class="form-control @error('keluhan') is-invalid @enderror" name="keluhan" rows="5" 
-                              placeholder="Masukan Keluhan Anda">{{ old('keluhan') }}</textarea>
-                    @error('keluhan')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-            
-                <div class="form-group mt-3">
-                    <label for="riwayat" class="mb-2">Riwayat Penyakit</label>
-                    <textarea class="form-control @error('riwayat') is-invalid @enderror" name="riwayat" rows="5"
-                              placeholder="Masukan Riwayat Anda">{{ old('riwayat') }}</textarea>
-                    @error('riwayat')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-            
-                <div class="mt-3 text-center">
-                    <button type="submit" class="btn btn-primary">Simpan</button>
+
+                    <div class="form-group mt-3">
+                        <label for="keluhan" class="mb-2">Keluhan Pasien</label>
+                        <textarea class="form-control @error('keluhan') is-invalid @enderror" name="keluhan" rows="5" 
+                                  placeholder="Masukan Keluhan Anda">{{ old('keluhan') }}</textarea>
+                        @error('keluhan')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label for="riwayat" class="mb-2">Riwayat Penyakit</label>
+                        <textarea class="form-control @error('riwayat') is-invalid @enderror" name="riwayat" rows="5"
+                                  placeholder="Masukan Riwayat Anda">{{ old('riwayat') }}</textarea>
+                        @error('riwayat')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    
+                    <div class="mt-3 text-center">
+                        <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
+                    </div>
+
+                    <div class="mt-3 text-center">
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+
                 </div>
             </form>
-            
         </div>
     </div>
 
     <script>
+        // Show the next step
+        function nextStep() {
+            // Validate step 1 fields before moving to step 2
+            const step1Fields = document.querySelectorAll('#step1 input, #step1 select');
+            let valid = true;
+
+            step1Fields.forEach(field => {
+                if (!field.checkValidity()) {
+                    field.classList.add('is-invalid');
+                    valid = false;
+                } else {
+                    field.classList.remove('is-invalid');
+                }
+            });
+
+            if (valid) {
+                document.getElementById('step1').style.display = 'none';
+                document.getElementById('step2').style.display = 'block';
+            }
+        }
+
+        // Go back to the previous step
+        function prevStep() {
+            document.getElementById('step2').style.display = 'none';
+            document.getElementById('step1').style.display = 'block';
+        }
+
+        // Show/hide BPJS field based on selected status
         document.getElementById('status').addEventListener('change', function() {
-            var bpjsField = document.getElementById('bpjs-field');
-            if (this.value == '2') {
+            const bpjsField = document.getElementById('bpjs-field');
+            if (this.value === 'BPJS') {
                 bpjsField.style.display = 'block';
             } else {
                 bpjsField.style.display = 'none';
+                document.getElementById('nomor_bpjs').value = ''; // Clear field if hidden
             }
         });
     </script>
-
-    
 @endsection

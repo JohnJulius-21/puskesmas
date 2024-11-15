@@ -31,7 +31,6 @@
                         <th>Nama Dokter</th>
                         <th>Keluhan</th>
                         <th>Riwayat</th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,18 +44,16 @@
                             <td>{{ $item['jenis_kelamin'] }}</td>
                             <td>{{ $item['no_hp'] }}</td>
                             <td>{{ \Carbon\Carbon::parse($item['tanggal_konsultasi'])->locale('id')->isoFormat('D MMMM Y HH:mm A') }}</td>
-                            <td>{{ $item['status'] }}</td>
-                            <td>{{ $item['nomor_bpjs'] }}</td>
+                            <td>
+                                {{ $item['nomor_bpjs'] ? 'BPJS' : 'Umum' }}
+                            </td>
+                            <td>
+                                {{ $item['nomor_bpjs'] ? $item['nomor_bpjs'] : 'Pasien Non-BPJS ' }}
+                            </td>
                             <td>{{ $item->jenis_layanan->jenis_layanan }}</td>
                             <td>{{ $item->dokter->name }}</td>
                             <td>{{ $item['keluhan'] }}</td>
                             <td>{{ $item['riwayat'] }}</td>
-                            <td>
-                                <form action="{{ route('hapusPasien', $item['id']) }}" method="POST">
-                                    @csrf
-                                    <button class="btn btn-danger">Hapus</button>
-                                </form>
-                            </td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -71,5 +68,6 @@
         $('#pasien').DataTable({
             scrollY: 200,
         });
+        
     </script>
 @endsection

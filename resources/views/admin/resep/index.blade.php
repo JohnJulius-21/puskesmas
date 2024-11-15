@@ -4,7 +4,7 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 ">
         <h1 class="h2">Resep</h1>
         <div class="d-flex justify-content-end">
-            <a href="{{ route('tambahResep') }}" class="btn btn-primary"><i style="width:17px" data-feather="plus"></i>
+            <a href="{{ route('tambahResep') }}" class="btn btn-primary"><i style="width:17px" data-feather="plus"> </i>
                 Tambah
                 Resep</a>
         </div>
@@ -23,6 +23,7 @@
                         <th>Nama Obat</th>
                         <th>Laporan</th>
                         <th>Catatan</th>
+                        <th>Nama Dokter<th>
                     </tr>
                 </thead>
                 <tbody>
@@ -33,6 +34,13 @@
                             <td>{{ $item->obat->nama_obat }}</td>
                             <td>{{ $item['laporan'] }}</td>
                             <td>{{ $item['catatan'] }}</td>
+                            <td>
+                                @php
+                                    // Cari dokter berdasarkan patient_id di tabel konsultasi
+                                    $dokterNama = $konsultasi->firstWhere('patient_id', $item->patient_id)?->dokter?->name ?? 'Dokter tidak tersedia';
+                                @endphp
+                                {{ $dokterNama }}
+                            </td>
                     @endforeach
                 </tbody>
             </table>

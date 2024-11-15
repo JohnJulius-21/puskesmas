@@ -59,7 +59,7 @@
                         @enderror
                     </div>
                 
-                    <div class="form-group mt-3">
+                    <div class="form-group mt-3 mb-3">
                         <label for="no_telp">Nomor Telepon:</label>
                         <input type="tel" class="form-control @error('no_telp') is-invalid @enderror" id="no_telp" name="no_telp" value="{{ old('no_telp') }}">
                         @error('no_telp')
@@ -69,15 +69,7 @@
                         @enderror
                     </div>
                 
-                    <div class="form-group mb-3 mt-3">
-                        <label for="foto">Foto:</label>
-                        <input type="file" class="form-control @error('foto') is-invalid @enderror" id="foto" name="foto" accept=".jpg, .jpeg, .png" value="{{ old('foto') }}">
-                        @error('foto')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
+                  
                 
                     <button type="submit" class="btn btn-primary">Tambah Dokter</button>
                 </form>

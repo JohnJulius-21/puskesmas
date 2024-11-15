@@ -19,8 +19,8 @@ class PemeriksaanController extends Controller
 
     public function create()
     {
-        $pasien = pasien::all();
-        $dokter = dokter::all();
+        $pasien = Pasien::with('konsultasi')->get(); // Load consultations to check status
+        $dokter = Dokter::all();
         return view("admin.konsultasi.create", compact("pasien", "dokter"));
     }
 
