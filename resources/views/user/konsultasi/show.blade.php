@@ -76,42 +76,39 @@
         @endif
     </div>
 
-    <!-- Resep Modal -->
-    <div class="modal fade" id="resepModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Detail Resep</h5>
-                </div>
-                <div class="modal-body">
-                    @if ($resep->isEmpty())
-                        <p><strong>Resep belum ada, mohon menunggu resep Anda!</strong></p>
-                    @else
-                        <p><strong>Laporan Pemeriksaan:</strong> <span id="modal-laporan"></span></p>
-                        @foreach ($resep as $item)
-                            <p><strong>Obat {{ $loop->iteration }}</strong></p>
-                            <p><strong>Nama Obat:</strong> <span>{{ $item->obat->nama_obat }}</span></p>
-                            <p><strong>Catatan:</strong> <span>{{ $item->catatan }}</span></p>
-                        @endforeach
-                        <p><strong>Dokter:</strong> <span id="modal-nama-dokter"></span></p>
-                    @endif
-                </div>
-                <div class="modal-footer">
-                    <!-- In HTML -->
-                    <!-- In HTML (form submission) -->
-                    <form action="{{ route('generate.pdf', ['id' => $konsultasi->first()->id]) }}" method="GET">
-                        <button type="submit" class="btn btn-success">Cetak Resep</button>
-                    </form>
-                    
-                    
-
-
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
-                </div>
-            </div>
+ <!-- Resep Modal -->
+<div class="modal fade" id="resepModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Detail Resep</h5>
+        </div>
+        <div class="modal-body">
+            @if ($resep->isEmpty())
+                <p><strong>Resep belum ada, mohon menunggu resep Anda!</strong></p>
+            @else
+                <p><strong>Laporan Pemeriksaan:</strong> <span id="modal-laporan"></span></p>
+                @foreach ($resep as $item)
+                    <p><strong>Obat {{ $loop->iteration }}</strong></p>
+                    <p><strong>Nama Obat:</strong> <span>{{ $item->obat->nama_obat }}</span></p>
+                    <p><strong>Catatan:</strong> <span>{{ $item->catatan }}</span></p>
+                @endforeach
+                <p><strong>Dokter:</strong> <span id="modal-nama-dokter"></span></p>
+            @endif
+        </div>
+        <div class="modal-footer">
+            @if ($konsultasi->isNotEmpty())
+                <form action="{{ route('generate.pdf', ['id' => $konsultasi->first()->id]) }}" method="GET">
+                    <button type="submit" class="btn btn-success">Cetak Resep</button>
+                </form>
+            @endif
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
         </div>
     </div>
+</div>
+</div>
+
 
     <!-- External JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
