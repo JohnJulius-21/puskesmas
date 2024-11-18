@@ -46,6 +46,8 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/user/logout', [LoginController::class, 'userLogout'])->name('user.logout');
 Route::post('/logout', [LoginController::class, 'adminLogout'])->name('adminLogout');
+Route::post('/dokter/logout', [LoginController::class, 'dokterLogout'])->name('dokter.logout');
+
 
 
 

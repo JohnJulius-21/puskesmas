@@ -24,39 +24,42 @@ class LoginController extends Controller
             ->first();
 
         // Jika user ditemukan
-        if ($user) {
-            // Periksa apakah user adalah admin
-            if ($user->role_id == 1) { // role_id 1 diasumsikan sebagai admin
-                // Coba login sebagai admin menggunakan guard 'admin'
-                if (Auth::guard('admin')->attempt($credentials)) {
-                    return redirect()->route('pasien'); // Arahkan ke halaman dashboard admin
-                } else {
-                    return redirect()->back()->withInput($request->only('email'))->withErrors([
-                        'password' => 'Password salah.',
-                    ]);
-                }
+    if ($user) {
+        // Periksa apakah user adalah admin
+        if ($user->role_id == 1) { // role_id 1 diasumsikan sebagai admin
+            // Coba login sebagai admin menggunakan guard 'admin'
+            if (Auth::guard('admin')->attempt($credentials)) {
+                return redirect()->route('pasien'); // Arahkan ke halaman dashboard admin
             } else {
-                // Jika bukan admin, maka login sebagai user biasa dengan guard 'web'
-                $userCredentials = [
-                    'email' => $request->input('email'),
-                    'password' => $request->input('password'),
-                ];
-
-                $uniqueNameCredentials = [
-                    'unique_name' => $user->unique_name,
-                    'password' => $request->input('password'),
-                ];
-
-                // Coba login sebagai user biasa dengan guard 'web'
-                if (Auth::guard('web')->attempt($userCredentials) || Auth::guard('web')->attempt($uniqueNameCredentials)) {
-                    return redirect()->route('beranda'); // Arahkan ke halaman user
-                } else {
-                    return redirect()->back()->withInput($request->only('email'))->withErrors([
-                        'password' => 'Password salah.',
-                    ]);
-                }
+                return redirect()->back()->withInput($request->only('email'))->withErrors([
+                    'password' => 'Password salah.',
+                ]);
+            } 
+        } 
+         // Check if user is a dokter (doctor)
+         elseif ($user->role_id == 2) { // Assuming 2 is the role_id for dokter
+            // Attempt login with 'dokter' guard (you need to define this guard in config/auth.php)
+            if (Auth::guard('dokter')->attempt($credentials)) {
+                return redirect()->route('pasien'); // Redirect to dokter's dashboard (replace with actual route)
+            } else {
+                return redirect()->back()->withInput($request->only('email'))->withErrors([
+                    'password' => 'Incorrect password for dokter.',
+                ]);
             }
         }
+   
+        else {
+            // Coba login sebagai user biasa dengan guard 'web'
+            if (Auth::guard('web')->attempt($credentials)) {
+                return redirect()->route('beranda'); // Arahkan ke halaman beranda user
+            } else {
+                return redirect()->back()->withInput($request->only('email'))->withErrors([
+                    'password' => 'Password salah.',
+                ]);
+            }
+        }
+    }
+
 
         // Jika user tidak ditemukan
         return redirect()->back()->withInput($request->only('email'))->withErrors([
@@ -88,16 +91,33 @@ class LoginController extends Controller
         Auth::guard('admin')->logout(); // Logout dari guard 'admin'
         $request->session()->invalidate(); // Hapus sesi
         $request->session()->regenerateToken(); // Regenerasi token untuk keamanan
-
+    
+        // Kirim pesan logout untuk admin
         return redirect()->route('login')->with('status', 'Admin berhasil logout.');
     }
-
+    
     public function userLogout(Request $request)
     {
-        Auth::guard('web')->logout(); // Logout dari guard 'admin'
+        Auth::guard('web')->logout(); // Logout dari guard 'web'
         $request->session()->invalidate(); // Hapus sesi
         $request->session()->regenerateToken(); // Regenerasi token untuk keamanan
-
+    
+        // Kirim pesan logout untuk user biasa
         return redirect()->route('login')->with('status', 'User berhasil logout.');
     }
+    
+    public function dokterLogout(Request $request)
+    {
+        // Logout dari guard 'dokter'
+        Auth::guard('dokter')->logout();
+        
+        // Hapus sesi dan regenerasi token untuk keamanan
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        
+        // Redirect ke halaman login dengan pesan untuk dokter
+        return redirect()->route('login')->with('status', 'Dokter berhasil logout.');
+    }
+    
+
 }

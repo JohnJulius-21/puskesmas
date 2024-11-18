@@ -18,18 +18,45 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        
-        // Cek apakah user sedang login melalui guard 'admin'
+        // Pastikan bahwa pengguna terautentikasi dengan guard 'admin'
         if (Auth::guard('admin')->check()) {
-            // Cek apakah role_id user adalah 1 (admin)
             $user = Auth::guard('admin')->user();
-            
-            if ($user->role_id == 1) {
-                return $next($request); // Lanjutkan jika admin
+        
+            // Cek role_id untuk menentukan akses
+            if ($user->role_id == 1) { // Admin
+                return $next($request); // Akses diterima untuk Admin
+            }
+    
+            if ($user->role_id == 2) { // Dokter
+                // Periksa apakah URL termasuk dalam izin dokter
+                if ($request->is('resep*') || $request->is('konsultasi*')) {
+                    return $next($request); // Akses diperbolehkan
+                }
+    
+                // Redirect jika mengakses halaman yang tidak diizinkan
+                return redirect()->route('resep')->withErrors('Anda tidak memiliki izin untuk mengakses halaman ini.');
             }
         }
-
-        // Jika bukan admin atau role_id tidak sesuai, redirect ke halaman yang diinginkan
-        return redirect()->route('resep')->withErrors('Anda tidak memiliki izin untuk mengakses halaman ini.');
+    
+        // Pastikan bahwa pengguna terautentikasi dengan guard 'dokter'
+        if (Auth::guard('dokter')->check()) {
+            $user = Auth::guard('dokter')->user();
+        
+            // Cek role_id untuk menentukan akses
+            if ($user->role_id == 2) { // Dokter
+                // Periksa apakah URL termasuk dalam izin dokter
+                if ($request->is('resep*') || $request->is('pemeriksaan*') || $request->is('dokter/pemeriksaan*')) {
+                    return $next($request); // Akses diperbolehkan
+                }
+                
+    
+                // Redirect jika mengakses halaman yang tidak diizinkan
+                return redirect()->route('resep')->withErrors('Anda tidak memiliki izin untuk mengakses halaman ini.');
+            }
+        }
+    
+        // Jika tidak terautentikasi dengan salah satu guard, redirect ke login
+        return redirect()->route('login');
     }
+    
 }

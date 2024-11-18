@@ -3,11 +3,12 @@
     <x-authentication-card class="w-full max-w-2xl"> 
         <x-slot name="logo">
             {{-- <x-authentication-card-logo /> --}}
-            <div><img  src="/images/logo puskes.png" alt="logo kesehatan"  style="width: 160px; height: 160px;"></div>
+            <div><img src="/images/logo puskes.png" alt="logo kesehatan" style="width: 160px; height: 160px;"></div>
         </x-slot>
 
         <x-validation-errors class="mb-4" />
 
+        <!-- Menampilkan pesan logout jika ada -->
         @if (session('status'))
             <div class="mb-4 font-medium text-sm text-green-600">
                 {{ session('status') }}
@@ -26,7 +27,7 @@
                 <x-label for="password" value="{{ __('Kata Sandi') }}" />
                 <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" placeholder="Masukkan kata sandi Anda" />
                 <input type="checkbox" id="show_password" class="ml-2" onclick="togglePassword()" />
-                    <label for="show_password" class="text-sm text-gray-600 cursor-pointer">{{ __('Perlihatkan Password Saya') }}</label>
+                <label for="show_password" class="text-sm text-gray-600 cursor-pointer">{{ __('Perlihatkan Password Saya') }}</label>
             </div>
 
             <div class="block mt-4">
@@ -56,5 +57,5 @@
                 passwordInput.type = showPasswordCheckbox.checked ? 'text' : 'password';
             }
         </script>
-    </x-authentication-card>
+    </x-authentication-card>  
 </x-guest-layout>
